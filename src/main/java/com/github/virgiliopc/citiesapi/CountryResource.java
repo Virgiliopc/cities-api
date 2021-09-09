@@ -2,7 +2,8 @@ package com.github.virgiliopc.citiesapi;
 
 import com.github.virgiliopc.citiesapi.countries.Country;
 import com.github.virgiliopc.citiesapi.repository.CountryRepository;
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,8 +14,12 @@ public class CountryResource {
 
     private CountryRepository repository;
 
+    public CountryResource(CountryRepository repository) {
+        this.repository = repository;
+    }
+
     @GetMapping
-    public List<Country> countries() {
-        return repository.findAll();:
+    public Page<Country> countries(Pageable page) {
+        return repository.findAll(page);
     }
 }
